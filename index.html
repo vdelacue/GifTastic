@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="container">
-        <h1>GifTastic Search!</h1>
+        <header class="display-1"><h1>GifTastic Search!</h1></header>
         <div class="row">
             <!-- search result buttons will get dumped here -->
             <div class="col-md-12" id="buttons-view"></div>
@@ -24,15 +24,15 @@
                     <input type="text" id="giffy-input">
                     <br>
                     <!-- Button triggers new Giffy search (Ajax call) to be added to buttons view -->
-                    <input id="add-giffy" type="submit" value="Add that GOT Button!">
+                    <input id="add-giffy" type="submit" value="Add that GOT Button!" class="btn btn-dark btn-sm">
                 </form>
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="gif-spot">
             <div class="col-md-12" id="gifs-appear-here">
 
             </div>
-            
+
         </div>
 
 </div>

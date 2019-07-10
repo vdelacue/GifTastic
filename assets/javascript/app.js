@@ -19,7 +19,7 @@ $(document).ready(function () {
         // Loop through the array of directors, then generate buttons for each game of thrones element in the array 
         for (var i = 0; i < gameOfThrones.length; i++) {
             var newBTN = $("<button>").text(gameOfThrones[i]);
-            newBTN.addClass("gotSearch");
+            newBTN.addClass("gotSearch btn btn-light btn-lg");
             newBTN.attr("data-name", gameOfThrones[i]);
             $("#buttons-view").append(newBTN);
         }
@@ -36,7 +36,7 @@ $(document).ready(function () {
         renderButtons();
 
     });
-
+    // click on button with search val, trigger an ajax call to API to retreive gifs from Giffy
     $(document).on("click", ".gotSearch", function (event) {
         var giffySearch = $(this).attr("data-name");
         console.log(giffySearch);
@@ -58,7 +58,7 @@ $(document).ready(function () {
             img.attr("data-animate", result[i].images.fixed_height.url);
             img.attr("data-still", result[i].images.fixed_height_still.url);
             img.attr("data-state", "still");
-            img.addClass("gif");
+            img.addClass("gif img-thumbnail");
             ratingSpan.append(img);
             ratingSpan.append(ratingP);
             $("#gifs-appear-here").append(ratingSpan);
@@ -67,9 +67,10 @@ $(document).ready(function () {
     })
 
     $(document).on("click", ".gif", function() {
+        $("#gifs-appear-here").empty();
         // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
         var state = $(this).attr("data-state");
-        // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+        // If the clicked image's state is still, update its src attribute to its data-animate value is.
         // Then, set the image's data-state to animate
         // Else set src to the data-still value
         if (state === "still") {
@@ -81,15 +82,6 @@ $(document).ready(function () {
         }
       });
   
-
-
-
-
-
     // Calling the renderButtons function to display the initial list of game of thrones
     renderButtons();
-
-
-    //on click function to animate and still gif
-    // $(document).on("click", ".gotSearch", FUNCTION_NAME_HERE_FOR_RENDERING_GIF_RESPONSE);
 });
