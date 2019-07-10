@@ -9,7 +9,7 @@ $(document).ready(function () {
 
     //-----------------------function to append search buttons to buttons-view-----------------//
 
-    // Initial array of directors
+    // Initial array of game of thrones
     var gameOfThrones = ["white walkers", "ned stark", "winter is coming", "toromund", "king in the north", "mother of dragons", "westeros", "the lanisters", "red wedding"];
 
     // Function for rendering game of thrones buttons
@@ -28,12 +28,18 @@ $(document).ready(function () {
     // ----------------------FUNCTIONS TO HANDLE CLICKS----------------------------//
 
     //click on searh button function
-        $("#add-giffy").on("click", function (event) {
+    $("#add-giffy").on("click", function (event) {
         event.preventDefault();
         var giffySearch = $("#giffy-input").val().trim();
         gameOfThrones.push(giffySearch);
         // The renderButtons function is called, rendering the list of game of thrones buttons
         renderButtons();
+
+    });
+
+    $(document).on("click", ".gotSearch", function (event) {
+        var giffySearch = $(this).attr("data-name");
+        console.log(giffySearch);
         var queryURL = 'http://api.giphy.com/v1/gifs/search?q=' + giffySearch + '&api_key=L43wJBtUPD4uQ2Z9X9UvTIQ1OIo2KwLZ&limit=10';
 
         $.ajax({
@@ -42,17 +48,44 @@ $(document).ready(function () {
         }).then(function (response) {
             console.log(response);
 
+        var result = response.data;
+        console.log(result);
+        for(var i=0;i < result.length; i++ ) {
+            var img = $("<img>");
+            var ratingSpan = $("<span>");
+            var ratingP = $("<p>").text("Rating: " + result[i].rating);
+            img.attr("src", result[i].images.fixed_height_still.url)
+            img.attr("data-animate", result[i].images.fixed_height.url);
+            img.attr("data-still", result[i].images.fixed_height_still.url);
+            img.attr("data-state", "still");
+            img.addClass("gif");
+            ratingSpan.append(img);
+            ratingSpan.append(ratingP);
+            $("#gifs-appear-here").append(ratingSpan);
+        }
         })
-    });
-    
-    //click on a button from button view that has beed added from search
+    })
 
-    $(".")
-    
-    
-    
-    
-    
+    $(document).on("click", ".gif", function() {
+        // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+        var state = $(this).attr("data-state");
+        // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+        // Then, set the image's data-state to animate
+        // Else set src to the data-still value
+        if (state === "still") {
+          $(this).attr("src", $(this).attr("data-animate"));
+          $(this).attr("data-state", "animate");
+        } else {
+          $(this).attr("src", $(this).attr("data-still"));
+          $(this).attr("data-state", "still");
+        }
+      });
+  
+
+
+
+
+
     // Calling the renderButtons function to display the initial list of game of thrones
     renderButtons();
 
