@@ -10,7 +10,7 @@ $(document).ready(function () {
     //-----------------------function to append search buttons to buttons-view-----------------//
 
     // Initial array of game of thrones
-    var gameOfThrones = ["white walkers", "ned stark", "winter is coming", "toromund", "king in the north", "mother of dragons", "westeros", "the lanisters", "red wedding"];
+    var gameOfThrones = ["white walkers", "ned stark", "winter is coming", "tormund giantsbane", "king in the north", "mother of dragons", "westeros", "the lanisters", "red wedding"];
 
     // Function for rendering game of thrones buttons
     function renderButtons() {
@@ -50,7 +50,9 @@ $(document).ready(function () {
 
         var result = response.data;
         console.log(result);
+        $("#gifs-appear-here").empty();
         for(var i=0;i < result.length; i++ ) {
+            
             var img = $("<img>");
             var ratingSpan = $("<span>");
             var ratingP = $("<p>").text("Rating: " + result[i].rating);
@@ -67,7 +69,7 @@ $(document).ready(function () {
     })
 
     $(document).on("click", ".gif", function() {
-        $("#gifs-appear-here").empty();
+       
         // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
         var state = $(this).attr("data-state");
         // If the clicked image's state is still, update its src attribute to its data-animate value is.
